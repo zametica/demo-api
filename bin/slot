@@ -35,17 +35,17 @@ end_date = date_parsed + (24 * 60 * 60)
 # p end_date
 
 available_slots = []
+booked_on_day = BOOKED_SLOTS.select { |s| Date.parse(s[:start]).to_s == date || Date.parse(s[:end]).to_s == date }
 start = date_parsed
 
 while start < end_date
   end_time = start + (duration * 60)
 
-  unless (BOOKED_SLOTS.any? { |s| dates_overlap?((Time.parse(s[:start]).to_i..Time.parse(s[:end]).to_i), (start.to_i..end_time.to_i)) })
+  unless (booked_on_day.any? { |s| dates_overlap?((Time.parse(s[:start]).to_i..Time.parse(s[:end]).to_i), (start.to_i..end_time.to_i)) })
     available_slots << { start: start, end: end_time }
   end
 
   start = start + (15 * 60)
 end
 
-p available_slots.length
 p available_slots.sort { |p,n| p[:start] <=> n[:start] }

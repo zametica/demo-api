@@ -12,10 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2022_04_21_084356) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "timescaledb"
-
   create_table "slots", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
